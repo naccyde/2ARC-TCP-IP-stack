@@ -1,0 +1,72 @@
+{
+
+	"title": "doge_netheap",
+	"functions": [
+		{
+			"name" : "init_heap",
+			"return_type" : "void",
+			"parameters" : [
+			],
+			"desc" : "Initialize heap",
+			"returns" : [
+				{
+					"type" : "void",
+					"reason" : ""
+				}
+			]
+		},
+		{
+			"name" : "add_heap",
+			"return_type" : "void",
+			"parameters" : [
+				{
+					"type" : "struct nlmsghdr *",
+					"name" : "nlh",
+					"desc" : "Structure to a netheap message header"
+				},
+				{
+					"type" : "int",
+					"name" : "pid",
+					"desc" : "Processus id"
+				}
+			],
+			"desc" : "Add a heap",
+			"returns" : [
+				{
+					"type" : "void",
+					"reason" : ""
+				}
+			]
+		},
+		{
+			"name" : "rmv_heap",
+			"return_type" : "void",
+			"parameters" : [
+				{
+					"type" : "int",
+					"name" : "pid",
+					"desc" : "Processus id"
+				}
+			],
+			"desc" : "Remove a heap",
+			"returns" : [
+				{
+					"type" : "void",
+					"reason" : ""
+				}
+			]
+		},
+		{
+			"name" : "heap_clean",
+			"return_type" : "void",
+			"parameters" : [],
+			"desc" : "Clean heaps",
+			"returns" : [
+				{
+					"type" : "void",
+					"reason" : ""
+				}
+			]
+		}
+	]
+}

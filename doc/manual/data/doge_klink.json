@@ -1,0 +1,24 @@
+{
+
+	"title": "doge_klink",
+	"functions": [
+		{
+			"name" : "doge_packet_to_sk_buff",
+			"return_type" : "struct sk_buff *",
+			"parameters" : [
+				{
+					"type" : "struct doge_packet *",
+					"name" : "packet",
+					"desc" : "DOGE packet structure"
+				}
+			],
+			"desc" : "Convert a DOGE packet structure to sk_buff structure",
+			"returns" : [
+				{
+					"type" : "struct sk_buff *",
+					"reason" : ""
+				}
+			]
+		}
+	]
+}

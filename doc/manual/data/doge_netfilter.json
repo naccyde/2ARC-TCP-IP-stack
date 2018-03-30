@@ -1,0 +1,32 @@
+{
+
+	"title": "doge_netfilter",
+	"functions": [
+		{
+			"name" : "hook_init",
+			"return_type" : "void",
+			"parameters" : [
+			],
+			"desc" : "Initialize hook",
+			"returns" : [
+				{
+					"type" : "void",
+					"reason" : ""
+				}
+			]
+		},
+		{
+			"name" : "hook_clean",
+			"return_type" : "void",
+			"parameters" : [
+			],
+			"desc" : "Clean hook",
+			"returns" : [
+				{
+					"type" : "void",
+					"reason" : ""
+				}
+			]
+		}
+	]
+}

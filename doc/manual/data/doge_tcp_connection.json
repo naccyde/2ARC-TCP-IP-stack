@@ -1,0 +1,90 @@
+{
+
+	"title": "doge_tcp_connection",
+	"functions": [
+		{
+			"name" : "doge_tcpc_init",
+			"return_type" : "void",
+			"parameters" : [],
+			"desc" : "Initialize TCP connection",
+			"returns" : [
+				{
+					"type" : "void",
+					"reason" : ""
+				}
+			]
+		},
+		{
+			"name" : "doge_tcpc_add",
+			"return_type" : "void",
+			"parameters" : [
+				{
+					"type" : "struct doge_tcp_connection *",
+					"name" : "tcp",
+					"desc" : "DOGE TCP connection structure"
+				}
+			],
+			"desc" : "Add a DOGE TCP connection",
+			"returns" : [
+				{
+					"type" : "void",
+					"reason" : ""
+				}
+			]
+		},
+		{
+			"name" : "doge_tcpc_rmv",
+			"return_type" : "void",
+			"parameters" : [
+				{
+					"type" : "struct doge_tcp_connection *",
+					"name" : "tcp",
+					"desc" : "DOGE TCP connection structure"
+				}
+			],
+			"desc" : "Remove a DOGE TCP connection",
+			"returns" : [
+				{
+					"type" : "void",
+					"reason" : ""
+				}
+			]
+		},
+		{
+			"name" : "doge_tcpc_get",
+			"return_type" : "struct doge_tcp_connection *",
+			"parameters" : [
+				{
+					"type" : "__be32",
+					"name" : "ip",
+					"desc" : "Destination ip"
+				},
+				{
+					"type" : "__be16",
+					"name" : "port",
+					"desc" : "Destination port"
+				}
+			],
+			"desc" : "Get the DOGE TCP connection structure of the given ip and port",
+			"returns" : [
+				{
+					"type" : "struct doge_tcp_connection *",
+					"reason" : ""
+				}
+			]
+		},
+		{
+			"name" : "doge_tcp_clean",
+			"return_type" : "void",
+			"parameters" : [],
+			"desc" : "Clean TCP connections",
+			"returns" : [
+				{
+					"type" : "void",
+					"reason" : ""
+				}
+			]
+		}
+
+	]
+}

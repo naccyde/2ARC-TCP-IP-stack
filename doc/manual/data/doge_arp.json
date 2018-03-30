@@ -1,0 +1,100 @@
+{
+
+	"title": "doge_arp",
+	"functions": [
+		{
+			"name" : "doge_create_arphdr",
+			"return_type" : "struct doge_arphdr *",
+			"parameters" : [],
+			"desc" : "Create a DOGE ARP header",
+			"returns" : [
+				{
+					"type" : "struct doge_arphdr *",
+					"reason" : ""
+				}
+			]
+		},
+		{
+			"name" : "doge_darphdr_to_karphdr",
+			"return_type" : "void",
+			"parameters" : [
+				{
+					"type" : "struct doge_arphdr *",
+					"name" : "darphdr",
+					"desc" : "Pointer to the DOGE struct arphdr *"
+				},
+				{
+					"type" : "struct arphdr *",
+					"name" : "karphdr",
+					"desc" : "Pointer to the kernel struct arphdr *"
+				}
+			],
+			"desc" : "Convert a DOGE ARP header to a kernel ARP header",
+			"returns" : [
+				{
+					"type" : "void",
+					"reason" : ""
+				}
+			]
+		},
+                {
+			"name" : "doge_karphdr_to_darphdr",
+			"return_type" : "void",
+			"parameters" : [
+				{
+					"type" : "struct arphdr *",
+					"name" : "karphdr",
+					"desc" : "Pointer to the kernel struct arphdr *"
+				},
+				{
+					"type" : "struct doge_arphdr *",
+					"name" : "darphdr",
+					"desc" : "Pointer to the DOGE struct arphdr *"
+				}
+			],
+			"desc" : "Convert a kernel ARP header to a DOGE ARP header",
+			"returns" : [
+				{
+					"type" : "void",
+					"reason" : ""
+				}
+			]
+		},
+                {
+			"name" : "doge_arp_request",
+			"return_type" : "void",
+			"parameters" : [
+				{
+					"type" : "__be32",
+					"name" : "ip",
+					"desc" : "Destination ip of the request"
+				}
+			],
+			"desc" : "Send an ARP request to the given ip",
+			"returns" : [
+				{
+					"type" : "void",
+					"reason" : ""
+				}
+			]
+		},
+                {
+			"name" : "doge_handle_arp",
+			"return_type" : "void",
+			"parameters" : [
+				{
+					"type" : "struct doge_packet *",
+					"name" : "dpkt",
+					"desc" : "Pointer to the DOGE packet structure to handle"
+				}
+			],
+			"desc" : "Handle each recieved ARP packet",
+			"returns" : [
+				{
+					"type" : "void",
+					"reason" : ""
+				}
+			]
+		}
+	]
+}

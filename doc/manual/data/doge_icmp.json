@@ -1,0 +1,87 @@
+{
+
+	"title": "doge_icmp",
+	"functions": [
+		{
+			"name" : "doge_create_icmphdr",
+			"return_type" : "struct doge_icmphdr *",
+			"parameters" : [],
+			"desc" : "Create a DOGE ICMP header",
+			"returns" : [
+				{
+					"type" : "struct doge_icmphdr *",
+					"reason" : ""
+				}
+			]
+		},
+		{
+			"name" : "doge_kicmphdr_to_dicmphdr",
+			"return_type" : "void",
+			"parameters" : [
+				{
+					"type" : "int",
+					"name" : "len",
+					"desc" : "Header size"
+				},
+				{
+					"type" : "struct icmphdr *",
+					"name" : "kicmphdr",
+					"desc" : "Kernel ICMP header"
+				},
+				{
+					"type" : "struct doge_icmphdr *",
+					"name" : "dicmphdr",
+					"desc" : "DOGE ICMP header"
+				}
+			],
+			"desc" : "Convert a kernel ICMP header to a DOGE ICMP header",
+			"returns" : [
+				{
+					"type" : "void",
+					"reason" : ""
+				}
+			]
+		},
+ 		{
+			"name" : "doge_dicmphdr_to_kicmphdr",
+			"return_type" : "void",
+			"parameters" : [
+			        {
+					"type" : "struct doge_icmphdr *",
+					"name" : "dicmphdr",
+					"desc" : "DOGE ICMP header"
+				},
+				{
+					"type" : "struct icmphdr *",
+					"name" : "kicmphdr",
+					"desc" : "Kernel ICMP header"
+				}
+			],
+			"desc" : "Convert a DOGE ICMP header to a kernel ICMP header",
+			"returns" : [
+				{
+					"type" : "void",
+					"reason" : ""
+				}
+			]
+		},
+		{
+			"name" : "doge_handle_icmp",
+			"return_type" : "void",
+			"parameters" : [
+				{
+					"type" : "struct doge_packet *",
+					"name" : "dpkt",
+					"desc" : "DOGE packet structure"
+				}
+			],
+			"desc" : "Handle DOGE ICMP packets",
+			"returns" : [
+				{
+					"type" : "void",
+					"reason" : ""
+				}
+			]
+		}
+	]
+}

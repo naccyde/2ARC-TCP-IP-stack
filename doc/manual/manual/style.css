@@ -1,0 +1,135 @@
+/* BODY */
+body
+{
+	width: 1024px;
+	margin: 0 auto;
+	background-color: #D4D4D4;
+}
+
+a
+{
+	text-decoration: none;
+}
+
+.FunctionParameterInfo
+{
+	display:block;
+	width: 650px;
+	padding-left: 50px;
+}
+	
+.FunctionReturnInfo
+{
+	display:block;
+	width: 650px;
+	padding-left: 50px;
+}
+
+/* MAIN TITLE */
+.MainTitle
+{
+	font-weight: bold;
+	color: #FF6600;
+	text-align: center;
+}
+
+.MainTitle a
+{
+	text-decoration: none;
+	font-weight: bold;
+	color: #FF6600;
+	text-align: center;
+}
+
+.HeaderTitle, .FunctionTitle
+{
+	text-align: center;
+}
+
+.Header /* HTML5 header tag */
+{
+	height: 150px;
+	padding-bottom: 50px;
+}
+
+/* MAIN CONTENT */
+.ContentList
+{
+	width: 50%;
+	display: block;
+	margin: 0 auto;
+	background-color: #308CE7;
+}
+
+.ContentList ul
+{
+	list-style-type: none;
+
+}
+.ContentList ul li
+{
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.ContentList ul a
+{
+	text-decoration: none;
+	color: black;
+}
+
+/* HEADER MENU */
+.HeaderMenu
+{
+	float: left;
+	width: 300px;
+}
+
+.HeaderMenu ul a
+{
+	text-decoration: none;
+	color: black;
+}
+
+.HeaderMenu a:hover
+{
+	text-decoration: underline;
+}
+
+li
+{
+	list-style-type: none;
+}
+
+/* SELECTED OBJECT */
+.SelectedObject
+{
+	font-style: italic;
+}
+
+/* CODE HIGHLIGHTING */
+.FunctionName
+{
+	color: #16BE4E;
+	font-weight: bold;
+}
+
+.ReturnType
+{
+	font-style: italic;
+	color: #357AB7;
+}
+
+.ParameterType
+{
+	font-style: italic;
+	color: #357AB7;
+}
+
+/* DESCRIPTION */
+.ContentDescription
+{
+	float: right;
+	padding-top: 10px;
+	width: 700px;
+}

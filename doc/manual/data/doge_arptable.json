@@ -1,0 +1,71 @@
+{
+
+	"title": "doge_arptable",
+	"functions": [
+		{
+			"name" : "doge_arptable_init",
+			"return_type" : "void",
+			"parameters" : [],
+			"desc" : "Initialize an ARP table",
+			"returns" : [
+				{
+					"type" : "void",
+					"reason" : ""
+				}
+			]
+		},
+		{
+			"name" : "doge_arptable_add",
+			"return_type" : "void",
+			"parameters" : [
+				{
+					"type" : "__be32",
+					"name" : "new_ip",
+					"desc" : "New ip to add"
+				},
+				{
+					"type" : "const unsigned char *",
+					"name" : "new_mac",
+					"desc" : "New mac adress to add"
+				}
+			],
+			"desc" : "Add a new element in the ARP table",
+			"returns" : [
+				{
+					"type" : "void",
+					"reason" : ""
+				}
+			]
+		},
+		{
+			"name" : "doge_arp_table_get",
+			"return_type" : "unsigned char *",
+			"parameters" : [
+				{
+					"type" : "__be32",
+					"name" : "ip",
+					"desc" : "Ip to find in the ARP table"
+				}
+			],
+			"desc" : "Get the linked mac adress of given ip",
+			"returns" : [
+				{
+					"type" : "unsigned char *",
+					"reason" : ""
+				}
+			]
+		},
+		{
+			"name" : "doge_arptable_clean",
+			"return_type" : "void",
+			"parameters" : [],
+			"desc" : "Clean the ARP table",
+			"returns" : [
+				{
+					"type" : "void",
+					"reason" : ""
+				}
+			]
+		}
+	]
+}

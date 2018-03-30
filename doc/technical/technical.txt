@@ -1,0 +1,244 @@
+DOGE TCP/IP stack
+Q. Deslandes
+V. Novince
+K. Le Deroff
+B. Maignan
+
+
+                            The DOGE TCP/IP stack
+
+
+
+Résumé
+
+        La pile TCP/IP "DOGE" est un projet réalisé par des étudiants de
+        l'Ecole Superieure d'Informatique SUPINFO dans le cadre du projet
+        d'architecture de deuxième année. Le document qui suit explique
+        le fonctionnement de cette pile, les contraintes présentes et les
+        difficultés rencontrées.
+
+Fonction de cette documentation
+
+        Cette documentation a pour but d'expliquer la manière dont la pile
+        TCP/IP "DOGE" est construite et d'en décrire les différentes
+        fonctionnalités. En aucun cas ce projet est une alternative au
+        Loadable Kernel Module (LkM) présent dans le noyau Linux.
+
+Copyright
+
+        Ce projet est placé sous license GNU GPL. Les utilisateurs
+        bénéficient donc des droits suivants : liberté d'exécuter
+        le logiciel pour n'importe quel usage ; liberté d'étudier le
+        fonctionnement du programme et de l'adapter à ses besoins (ce qui
+        passe par l'accès aux codes sources) ; liberté de redistribuer
+        des copies ; obligation de faire bénéficier à la communauté des
+        versions modifiées.
+
+        Pour plus d'informations, référez-vous au lien suivant :
+        http://fr.wikipedia.org/wiki/Licence_publique_générale_GNU
+
+-------------------------------------------------------------------------------
+
+Table des matières
+
+        0. Introduction
+        1. Pré-requis à l'utilisation
+        2. Netfilter
+        3. sk_buff
+        4. Ethernet
+        5. Address Resolution Protocol (ARP)
+        6. Internet Protocol (IP)
+        7. Transmission Control Protocol (TCP)
+        8. Internet Control Message Protocol (ICMP)
+        9. Point sur la documentation
+
+-------------------------------------------------------------------------------
+
+
+0. Introduction
+
+        Une suite TCP/IP est un ensemble de protocols permettant les
+        communications par le biais de réseaux informatiques. Une pile
+        TCP/IP est représentée par 4 couches différentes, à savoir la
+        couche Application, représentant une programme nécessitant un
+        accès à Internet (pouvant être fournit par le biais de sockets
+        par exemple). Vient ensuite la couche Transport (couche de niveau 3),
+        elle désigne les protocols tels que le TCP, UDP, OSPF... Cette couche
+        prend en charge la fiabilité des échange, elle doit s'assurer que les
+        échanges se déroulent de manièe correcte et dans l'ordre requis. En
+        effet, il est parfois impératif que tous les paquets transmis arrivent
+        à la machine pour laquelle ils sont destinés. Certains protocols
+        de couche 3 (tel que TCP) permettent également de savoir à quelle
+        application de couche supérieure est destiné le paquet. Ensuite,
+        la couche Réseau permet de diriger le paquet d'une source à une
+        destination de manière "non orientée connexion", contrairement
+        au protocol TCP (couche 3), ce qui signifie qu'il n'est pas utile
+        d'établir une connexion avec l'hôte distant avant de commencer
+        la transmission des données. Enfin, la couche Accès réseau, ou
+        Liaison de données, désigne la manière dont sont transportés les
+        paquets sur la couche physique (le média) et spécifie également
+        le tramage (séquence de bits particulière marquant le début et la
+        fin du paquet). On y trouve les protocols Ethernet et SLIP par exemple.
+
+1. Pré-requis à l'utilisation
+
+	La DOGE TCP/IP Stack est conçue sur des machines fonctionnant en
+	environnement GNU/Linux, à savoir sur une distribution Fedora 22
+	64bits. Pour faire fonctionner le module Kernel DOGE, vous devez
+	installer les paquets suivants (nommés selon Fedora) :
+		- gcc
+		- kernel-devel
+		- kernel-headers
+
+
+2. Netfilter
+
+	Netfilter est un framework implémentant un pare-feu au sein du noyau
+	Linux. Ce framework permet de déclarer des filtres (hooks) afin de
+	capter certains types de paquets au sein de la pile TCP/IP déjà
+	présente dans le Kernel Linux. C'est également sur ce framework
+	que se base iptables, afin de configurer le pare-feu intégré aux
+	distributions GNU/Linux.
+	Ainsi, dans notre implémentation, nous avons déclaré deux hooks
+	différents. Le premier est un hook ARP, configuré de manière à
+	ce qu'il s'applique en premier lieu, c'est à dire avant les autres
+	hooks présents dans le Kernel. De cette manière, nous pouvons
+	récupérer les paquets ARP avant que le Kernel ne puisse les traiter,
+	voir y répondre, ce qui laisse le champs libre à la DOGE Stack
+	pour traiter et si besoin répondre au paquet. Sur chaque hook
+	déclaré, nous définissons une fonction appelée à l'arrivée
+	d'un paquet correspondant au filtre définit. Lors de l'arrivée
+	d'un paquet ARP sur l'ordinateur exécutant la DOGE TCP/IP Stack,
+	Netfilter fera alors appel à la fonction définie dans le hook, en
+	lui passant en paramètre le paquet reçu (structure sk_buff), ainsi
+	que différentes autres informations telles que le périphérique
+	ayant effectué la réception du paquet.
+
+
+3. sk_buff
+
+	La structure sk_buff est une structure présente dans le Kernel
+	Linux. Elle représente un paquet reçu par le système. Elle
+	contient également des informatiques sur le périphérique
+	ayant reçu le paquet, ainsi qu'un pointeur vers une structure
+	le représentant. Cette structure est présente durant toute la
+	vie d'un paquet au sein du système d'exploitation. De la mémoire
+	est allouée lors de la création / réception du paquet, puis est
+	libérée au moment de l'envoi du message (sauf erreur en cours de
+	traitement). La manipulation des structures sk_buff n'est pas très
+	compliquée, mais elle reste relativement longue car il faut allouer
+	une certaine quantité de mémoire pour l'ensemble de la structure,
+	puis réserver une partie de la mémoire allouée afin d'y placer
+	les données et les entêtes des protocoles, puis configurer chacune
+	des entêtes, ce qui peut se révéler assez fastidieux et très lourd.
+	Pour pallier à ces problèmes, nous avons recréer notre propre
+	structure afin de stocker les donées à envoyer et les entêtes de
+	protocoles. L'avantage de cette méthode et de pouvoir manipuler des
+	structures plus simples, plus légères et surtout plus adaptées à
+	l'utilisation que nous en avons. C'est également le choix que nous
+	avons fait pour l'ensemble du projet, à savoir faire abstraction de
+	l'ensemble de la pile TCP/IP originelle du noyau Linux. Malgré tout,
+	il n'est pas possible de faire totalement abstraction de l'ensemble
+	de la gestion du réseau du noyau, car il nous faut un point de
+	connexion entre notre pile et le Kernel (qui lui reçoit les paquets
+	par le biais des pilotes des interfaces réseau). Nous avons donc
+	différents points de connexion entre la DOGE TCP/IP Stack et le
+	noyau Linux, en communiquant au moyen de structures sk_buff.
+	Netfilter nous renvoie donc des structures sk_buff par le biais
+	des hooks, nous les convertissons alors en structure propres à la
+	pile DOGE afin d'effectuer un traitement plus adapté aux besoin
+	de la pile. De même, lors de l'envoie de paquets, la pile DOGE
+	fournit des structures sk_buff à la fonction dev_queue_xmit afin
+	de les envoyer sur le réseau. Mis à part dans ces conditions,
+	la structure sk_buff n'est pas utilisée dans la pile DOGE.
+
+
+4. Ethernet
+
+	Le protocol Ethernet est une protocol de couche 1 sur le modèle
+	TCP/IP. Il contient les adresses réseaux des ordinateurs de source et
+	de destination sur un réseau local. Il contient également le type
+	du protocol de couche supérieure, de manière à pouvoir accéder
+	aux données plus facilement.
+	En ce qui concerne la DOGE Stack, le protocol Ethernet a été
+	de nouveau implémenté, de manière relativement similaire, mais
+	tout en gardant l'abstraction du Kernel dans lequel la pile TCP/IP
+	se trouve. Malgré tout, la gestion du protocole de couche 1 est
+	toujours géré par le protocol de couche supérieure (IP ou ARP, en
+	l'occurence). En effet, les données à traiter étant relativement
+	faibles pour le protocol ARP, les trames entrent directement dans
+	les handlers des protocoles de couche 2.
+
+
+5. Address Resolution Protocol (ARP)
+
+	Le protocol ARP permet d'éffectuer la traduction d'un adresse de
+	protocole de couche réseau (comme une adresse IPv4) en une adresse
+	ethernet (adresse MAC et tout matériel de couche liaison). Un paquet
+	ARP se compose alors de deux entêtes différentes, une entête de
+	couche 1, généralement réprésentée par le protocole Ethernet,
+	ainsi qu'une entête ARP contenant les adresses MAC et IP source,
+	ainsi que deux autres champs représentant les adresses MAC et
+	IP de destination. Sachant que dans le cas d'une requête ARP,
+	le champ contenant l'adresse MAC de destination est évidemment
+	vide. De plus, le paquet est transmis en broadcast, le but étant de
+	traduire une adresse IP en une adresse MAC correspondante. De fait,
+	une fois que la machine concerné a reçu le paquet ARP (la machine
+	dont l'adresse IP se trouve dans le champ adresse IP de destination
+	de l'entête ARP), elle répond alors à la machine émettrice en
+	lui indiquant son adresse MAC.
+	Notre implémentation du protocole ARP est constituée d'une fonction
+	effectuant une requête ARP sur une IP spécifique, afin d'obtenir
+	l'adresse MAC correspondante à la dite IP, ainsi que d'un handler
+	gérant l'arrivée des paquets ARP sur la machine, elle répond
+	alors en adéquation avec la demande.
+
+
+6. Internet Protocol (IP)
+
+	Le protocol Internet permet un service d'adressage unique
+	pour l'ensemble des terminaux connectés. Il assure également
+	l'acheminement des paquets sans se préocuper de leur contenu. Bien
+	qu'il transmete correctement les données sur le réseau, celles-ci
+	ne sont pas protégées, ce qui fait de ce protocol un protocol
+	"non fiable". Il existe à ce jour 2 versions d'adresses IP, IPv4
+	et IPv6. Dans cette partie, nous n'aborderons que la version IPv4.
+	La DOGE TCP/IP possède également sa propre entête IP, similaire à
+	l'entête système même si quelques différences sont à remarquer,
+	tel que l'absence du champ correspondant à la somme de contrôle
+	de l'entête. En effet, la somme de contrôle dépend fortement
+	de l'agencement des champs dans la structure, les deux entêtes
+	(entête du Kernel et entête de la DOGE Stack) étant légèrement
+	différentes, la somme de contrôle serait alors erronnée. A noter
+	que la somme de contrôle de l'entête IP n'est calculée que lorsque
+
+
+7. Transmission Control Protocol (TCP)
+
+	Le protocol TCP, situé au dessus du protocol IP, permet de découper
+	les flux de données des applications en ségments. Contrairement au
+	protocol IP, celui-ci est considéré comme "protocol de transport
+	fiable" et se structure en trois grandes étapes : établissement
+	d'une connexion, transfert de données et terminaison de la connexion.
+
+
+8. Internet Control Message Procotol (ICMP)
+
+	Le protocol ICMP, se trouvant au même niveau que le protocol IP,
+	est utilisé pour transmettre des messages de contrôle et d'erreur
+	servants à annoncer, par exemple, un hôte inaccessible. En effet,
+	le protocole IP ne permettant pas de gérer ces erreurs, c'est grâce
+	au protocol ICMP qu'une machine émettrice peut savoir qu'il y a eu
+	un accident de réseau.
+
+
+9. Point sur la documentation
+
+	En parallèle de la documentation technique ici présente, vous
+	trouverez une documentation développeur détaillant les fonctions
+	présentes dans le module DOGE. Cette document est générée en HTML
+	à partir de fichiers de type JSON grâce à un script Python. Si
+	un problème survient, vous pouvez la générer de nouveau grâce
+	au Makefile et aux fichiers source fournis. Pour accéder à la
+	documentation, ouvrez "index.html" situé dans le dossier "manuel".
+

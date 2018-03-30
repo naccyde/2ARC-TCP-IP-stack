@@ -1,0 +1,30 @@
+{
+
+	"title": "doge_netlink",
+	"functions": [
+		{
+			"name" : "handle_msg",
+			"return_type" : "void",
+			"parameters" : [],
+			"desc" : "Handle messages",
+			"returns" : [
+				{
+					"type" : "void",
+					"reason" : ""
+				}
+			]
+		},
+		{
+			"name" : "netlink_clean",
+			"return_type" : "void",
+			"parameters" : [],
+			"desc" : "Clean messages",
+			"returns" : [
+				{
+					"type" : "void",
+					"reason" : ""
+				}
+			]
+		}
+	]
+}

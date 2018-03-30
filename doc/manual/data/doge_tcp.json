@@ -1,0 +1,82 @@
+{
+
+	"title": "doge_tcp",
+	"functions": [
+		{
+			"name" : "doge_create_tcphdr",
+			"return_type" : "struct doge_tcphdr *",
+			"parameters" : [],
+			"desc" : "Create a DOGE TCP header",
+			"returns" : [
+				{
+					"type" : "struct doge_tcphdr *",
+					"reason" : ""
+				}
+			]
+		},
+		{
+			"name" : "doge_dtcphdr_to_ktcphdr",
+			"return_type" : "void",
+			"parameters" : [
+				{
+					"type" : "struct doge_tcphdr *",
+					"name" : "dtcp",
+					"desc" : "DOGE TCP header structure"
+				},
+				{
+					"type" : "struct tcphdr *",
+					"name" : "ktcp",
+					"desc" : "Kernel TCP header structure"
+				}
+			],
+			"desc" : "Convert a DOGE TCP header to a Kernel TCP header",
+			"returns" : [
+				{
+					"type" : "void",
+					"reason" : ""
+				}
+			]
+		},
+		{
+			"name" : "doge_ktcphdr_to_dtcphdr",
+			"return_type" : "void",
+			"parameters" : [
+				{
+					"type" : "struct tcphdr *",
+					"name" : "ktcp",
+					"desc" : "Kernel TCP header structure"
+				},
+				{
+					"type" : "struct doge_tcphdr *",
+					"name" : "dtcp",
+					"desc" : "DOGE TCP header structure"
+				}
+			],
+			"desc" : "Convert a Kernel TCP header to a DOGE TCP header",
+			"returns" : [
+				{
+					"type" : "void",
+					"reason" : ""
+				}
+			]
+		},
+		{
+			"name" : "doge_handle_tcp",
+			"return_type" : "void",
+			"parameters" : [
+				{
+					"type" : "struct doge_packet *",
+					"name" : "dpkt",
+					"desc" : "Pointer to a DOGE packet structure"
+				}
+			],
+			"desc" : "Handle TCP packets",
+			"returns" : [
+				{
+					"type" : "void",
+					"reason" : ""
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,36 @@
+{
+
+	"title": "doge_network",
+	"functions": [
+		{
+			"name" : "doge_create_packet",
+			"return_type" : "struct doge_packet *",
+			"parameters" : [],
+			"desc" : "Create a DOGE packet structure",
+			"returns" : [
+				{
+					"type" : "struct doge_packet *",
+					"reason" : ""
+				}
+			]
+		},
+		{
+			"name" : "doge_free_packet",
+			"return_type" : "void",
+			"parameters" : [
+				{
+					"type" : "strcut doge_packet *",
+					"name" : "dpkt",
+					"desc" : ""
+				}
+			],
+			"desc" : "Free the given DOGE packet",
+			"returns" : [
+				{
+					"type" : "void",
+					"reason" : ""
+				}
+			]
+		}
+	]
+}

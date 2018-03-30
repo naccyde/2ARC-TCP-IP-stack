@@ -1,0 +1,93 @@
+{
+	"title": "doge_errinfo",
+	"functions": [
+		{
+			"name" : "doge_print",
+			"return_type" : "void",
+			"parameters" : [
+				{
+					"type" : "const char *",
+					"name" : "lvl",
+					"desc" : "Message level, used in printk"
+				},
+				{
+					"type" : "const char *",
+					"name" : "msg",
+					"desc" : "Message to display"
+				},
+				{
+					"type" : "const char *",
+					"name" : "ctt",
+					"desc" : "Additionnal content to display"
+				},
+				{
+					"type" : "const char *",
+					"name" : "func",
+					"desc" : "Function who call the function, better use __FUNCTION__ macro"
+				}
+			],
+			"desc" : "Print messages and iformations in the kernel at the specified level",
+			"returns" : [
+				{
+					"type" : "void",
+					"reason" : ""
+				}
+			]
+		},
+		{
+			"name" : "arphdr_infos",
+			"return_type" : "void",
+			"parameters" : [
+				{
+					"type" : "struct arphdr *",
+					"name" : "arp",
+					"desc" : "struct arphdr * to display"
+				}
+			],
+			"desc" : "Display informations of an ARP header",
+			"returns" : [
+				{
+					"type" : "void",
+					"reason" : ""
+				}
+			]
+		},
+		{
+        		"name" : "doge_arphdr_infos",
+			"return_type" : "void",
+			"parameters" : [
+				{
+					"type" : "struct doge_arphdr *",
+					"name" : "arp",
+					"desc" : "struct doge_arphdr * to display"
+				}
+			],
+			"desc" : "Display informations of a DOGE ARP header",
+			"returns" : [
+				{
+					"type" : "void",
+					"reason" : ""
+				}
+			]
+		},
+		{
+			"name" : "doge_arptable_infos",
+			"return_type" : "void",
+			"parameters" : [
+				{
+					"type" : "struct hlist_head *",
+					"name" : "arp",
+					"desc" : "struct hlist_head * to display"
+				}
+			],
+			"desc" : "Display informations of a DOGE ARP table",
+			"returns" : [
+				{
+					"type" : "void",
+					"reason" : ""
+				}
+			]
+		}
+	]
+}
+

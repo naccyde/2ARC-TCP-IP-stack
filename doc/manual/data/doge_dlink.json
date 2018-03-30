@@ -1,0 +1,29 @@
+{
+
+	"title": "doge_dlink",
+	"functions": [
+		{
+			"name" : "dk_buff_to_doge_packet",
+			"return_type" : "struct doge_packet *",
+			"parameters" : [
+				{
+					"type" : "struct sk_buff *",
+					"name" : "skb",
+					"desc" : "Pointer to the sk_buff structure"
+				},
+				{
+					"type" : "struct net_device *",
+					"name" : "dev",
+					"desc" : "Pointer to the net_device structure"
+				}
+			],
+			"desc" : "Change a sk_buff structure to a DOGE packet",
+			"returns" : [
+				{
+					"type" : "struct doge_packet *",
+					"reason" : ""
+				}
+			]
+		}
+	]
+}

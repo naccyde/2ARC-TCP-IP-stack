@@ -1,0 +1,126 @@
+{
+
+	"title": "doge_eth",
+	"functions": [
+		{
+			"name" : "doge_create_ethhdr",
+			"return_type" : "struct doge_ethhdr",
+			"parameters" : [],
+			"desc" : "Create a DOGE ethernet header",
+			"returns" : [
+				{
+					"type" : "struct doge_ethhdr",
+					"reason" : ""
+				}
+			]
+		},
+		{
+			"name" : "doge_fill_ethhdr",
+			"return_type" : "void",
+			"parameters" : [
+				{
+					"type" : "struct doge_athhdr *",
+					"name" : "ethhdr",
+					"desc" : "Pointer to the DOGE ethernet header"
+				},
+				{
+					"type" : "unsigned char *",
+					"name" : "src",
+					"desc" : "Source mac adress"
+				},
+				{
+					"type" : "unsigned char *",
+					"name" : "dest",
+					"desc" : "Destination mac adress"
+				},
+				{
+					"type" : "int",
+					"name" : "nh_proto",
+					"desc" : "Network protocol"
+				}
+			],
+			"desc" : "Fill the ethernet header",
+			"returns" : [
+				{
+					"type" : "void",
+					"reason" : ""
+				}
+			]
+		},
+		{
+			"name" : "doge_fill_ethhdr_bdcast",
+			"return_type" : "void",
+			"parameters" : [
+				{
+					"type" : "struct doge_ethhdr *",
+					"name" : "ethhdr",
+					"desc" : "DOGE ethernet header"
+				},
+				{
+					"type" : "unsigned char *",
+					"name" : "src",
+					"desc" : "Source mac adress"
+				},
+				{
+					"type" : "int",
+					"name" : "nh_proto",
+					"desc" : "Network protocol"
+				}
+			],
+			"desc" : "Fill the ethernet header for broadcast",
+			"returns" : [
+				{
+					"type" : "void",
+					"reason" : ""
+				}
+			]
+		},
+		{
+			"name" : "doge_dethhdr_to_kethhdr",
+			"return_type" : "void",
+			"parameters" : [
+				{
+					"type" : "struct doge_ethhdr *",
+					"name" : "ethhdr",
+					"desc" : "DOGE ethernet header"
+				},
+				{
+					"type" : "struct ethhdr *",
+					"name" : "keth",
+					"desc" : "Kernel ethernet header"
+				}
+			],
+			"desc" : "Convert a DOGE ethernet header to an kernel ethernet header",
+			"returns" : [
+				{
+					"type" : "void",
+					"reason" : ""
+				}
+			]
+		},
+		{
+			"name" : "doge_kethhdr_to_dethhdr",
+			"return_type" : "void",
+			"parameters" : [
+				{
+					"type" : "struct ethhdr *",
+					"name" : "keth",
+					"desc" : "Kernel ethernet header"
+				},
+				{
+					"type" : "struct doge_ethhdr *",
+					"name" : "deth",
+					"desc" : "DOGE ethernet header"
+				}
+			],
+			"desc" : "Convert a kernel ethernet header to a DOGE ethernet header",
+			"returns" : [
+				{
+					"type" : "void",
+					"reason" : ""
+				}
+			]
+		}
+
+	]
+}
